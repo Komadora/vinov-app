@@ -642,11 +642,11 @@ function hesapla() {
 
     document.getElementById('results-container').innerHTML = `
         <div class="result-card vinov">
-            <div>
-                <div class="r-label">Vinov Fiyatı</div>
+            <div><div class="r-label">Vinov Fiyatı</div></div>
+            <div style="text-align:right">
+                <div class="r-value">${tl(vinovFiyat)}</div>
                 <div class="r-vade">(${vadeTarihi(gun)})</div>
             </div>
-            <div class="r-value">${tl(vinovFiyat)}</div>
         </div>
         <div class="result-card ucay">
             <div><div class="r-label">3 Ay Ötelemeli</div></div>
@@ -660,7 +660,9 @@ function hesapla() {
             <div class="taksit-body" id="taksit-body">${taksitRows}</div>
         </div>`;
 
-    window._lastCalc = { fiyat, gun, vinovFiyat, ucayFiyat };
+    const urunTam = document.getElementById('hesap-urun-input').value.trim();
+    const { name: urunAdi, pkg: ambalaj } = urunTam ? splitProduct(urunTam) : { name: '', pkg: '' };
+    window._lastCalc = { fiyat, gun, vinovFiyat, ucayFiyat, urunAdi, ambalaj };
     document.getElementById('results-section').style.display = 'block';
     setTimeout(() => {
         document.getElementById('results-section').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -683,15 +685,12 @@ function temizle() {
 function kopyala() {
     if (!window._lastCalc) return;
     const c = window._lastCalc;
-    const taksitSatirlar = state.settings.taksitOranlari.map((o,i) =>
-        ` ${i+2} Taksit: ${tl(c.fiyat*(1+o/100))}`
-    ).join('\n');
-    const metin =
-        `Anlaşma Fiyatı : ${tl(c.fiyat)}\n` +
-        `Vade           : ${c.gun} gün\n\n` +
-        `Vinov Fiyatı   : ${tl(c.vinovFiyat)}\n` +
-        `3 Ay Ötelemeli : ${tl(c.ucayFiyat)}\n\n` +
-        `Taksit Tablosu:\n${taksitSatirlar}`;
+    const satirlar = [];
+    if (c.urunAdi) satirlar.push(`Ürün İsmi : ${c.urunAdi}`);
+    if (c.ambalaj) satirlar.push(`Ambalaj   : ${c.ambalaj}`);
+    satirlar.push(`Tek Taksit Fiyatı : ${tl(c.fiyat)} +KDV`);
+    satirlar.push(`${c.gun} Gün Vinov Fiyatı : ${tl(c.vinovFiyat)} +KDV (${vadeTarihi(c.gun)})`);
+    const metin = satirlar.join('\n');
     if (navigator.clipboard) {
         navigator.clipboard.writeText(metin).then(() => showToast('✓ Kopyalandı!'));
     } else {
