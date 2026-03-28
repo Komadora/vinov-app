@@ -36,7 +36,6 @@
             flex-direction: column;
             max-width: 480px;
             margin: 0 auto;
-            position: relative;
         }
 
         /* ── HEADER ── */
@@ -53,22 +52,17 @@
             top: 0;
             z-index: 50;
         }
-        .header-icon { font-size: 22px; }
         .header h1 { font-size: 17px; font-weight: 700; letter-spacing: -.3px; flex: 1; }
 
-        /* ── TAB CONTENT ── */
+        /* ── TABS ── */
         .tab-content { flex: 1; overflow-y: auto; padding-bottom: 72px; }
         .tab-pane { display: none; padding: 14px 14px 0; }
         .tab-pane.active { display: block; }
 
         /* ── BOTTOM NAV ── */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 480px;
             background: #fff;
             border-top: 1px solid var(--border);
             display: flex;
@@ -77,324 +71,246 @@
             z-index: 50;
         }
         .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 9px 0;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--txt2);
-            font-size: 11px;
-            font-weight: 600;
-            gap: 3px;
+            flex: 1; display: flex; flex-direction: column; align-items: center;
+            padding: 9px 0; cursor: pointer; border: none; background: none;
+            color: var(--txt2); font-size: 11px; font-weight: 600; gap: 3px;
             transition: color .15s;
         }
         .nav-item.active { color: var(--blue); }
         .nav-icon { font-size: 21px; }
 
-        /* ── CARDS ── */
+        /* ── CARD ── */
         .card {
-            background: var(--card);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 4px rgba(0,0,0,.06);
+            background: var(--card); border-radius: 14px; padding: 16px;
+            margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06);
         }
         .card-title {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .7px;
-            text-transform: uppercase;
-            color: var(--txt2);
-            margin-bottom: 14px;
+            font-size: 11px; font-weight: 700; letter-spacing: .7px;
+            text-transform: uppercase; color: var(--txt2); margin-bottom: 14px;
         }
 
         /* ── FORM ── */
         .form-group { margin-bottom: 13px; }
         .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--txt2); margin-bottom: 6px; }
         .form-input, .form-select {
-            width: 100%;
-            padding: 13px 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            font-size: 16px;
-            color: var(--txt);
-            background: var(--bg);
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
+            width: 100%; padding: 13px 14px;
+            border: 1.5px solid var(--border); border-radius: 10px;
+            font-size: 16px; color: var(--txt); background: var(--bg);
+            outline: none; -webkit-appearance: none; appearance: none;
             transition: border-color .15s, background .15s;
         }
-        .form-input:focus, .form-select:focus {
-            border-color: var(--blue);
-            background: #fff;
-        }
+        .form-input:focus, .form-select:focus { border-color: var(--blue); background: #fff; }
         .form-select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 38px;
+            background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px;
         }
 
         /* ── BUTTONS ── */
         .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity .15s, transform .1s;
-            letter-spacing: .2px;
+            display: block; width: 100%; padding: 15px; border: none;
+            border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
+            transition: opacity .15s, transform .1s; letter-spacing: .2px;
         }
         .btn:active { opacity: .85; transform: scale(.98); }
-        .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 14px rgba(29,78,216,.3); }
-        .btn-secondary { background: var(--bg); color: var(--txt); border: 1.5px solid var(--border); }
-        .btn-danger { background: #FEE2E2; color: var(--red); }
-        .btn-sm { padding: 8px 13px; font-size: 13px; width: auto; border-radius: 8px; display: inline-block; }
+        .btn-primary  { background: var(--blue); color: #fff; box-shadow: 0 4px 14px rgba(29,78,216,.3); }
+        .btn-secondary{ background: var(--bg); color: var(--txt); border: 1.5px solid var(--border); }
+        .btn-danger   { background: #FEE2E2; color: var(--red); }
+        .btn-sm       { padding: 8px 13px; font-size: 13px; width: auto; border-radius: 8px; display: inline-block; }
 
         /* ── RESULT CARDS ── */
-        .result-section-title {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: .6px;
-            text-transform: uppercase;
-            color: var(--txt2);
-            margin: 16px 0 10px;
-        }
         .result-card {
-            border-radius: 14px;
-            padding: 15px 16px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            border-radius: 14px; padding: 15px 16px; margin-bottom: 10px;
+            display: flex; align-items: center; justify-content: space-between;
             animation: fadeUp .3s ease both;
         }
-        .result-card.vinov  { background: var(--blue-l);  border-left: 4px solid var(--blue);  }
-        .result-card.ucay   { background: var(--green-l); border-left: 4px solid var(--green); }
-        .result-card.taksit { background: var(--amber-l); border-left: 4px solid var(--amber); }
-        .result-card:nth-child(2) { animation-delay: .06s; }
-        .result-card:nth-child(3) { animation-delay: .12s; }
-
+        .result-card.vinov { background: var(--blue-l);  border-left: 4px solid var(--blue);  }
+        .result-card.ucay  { background: var(--green-l); border-left: 4px solid var(--green); animation-delay:.06s; }
         .r-label { font-size: 14px; font-weight: 700; }
-        .r-sub   { font-size: 11px; color: var(--txt2); margin-top: 2px; }
         .r-value { font-size: 22px; font-weight: 800; }
-        .result-card.vinov  .r-value { color: var(--blue);  }
-        .result-card.ucay   .r-value { color: var(--green); }
-        .result-card.taksit .r-value { color: var(--amber); }
+        .result-card.vinov .r-value { color: var(--blue); }
+        .result-card.ucay  .r-value { color: var(--green); }
+
+        /* ── TAKSİT ── */
+        .taksit-card {
+            background: var(--amber-l); border-radius: 14px; padding: 14px 16px;
+            margin-bottom: 10px; border-left: 4px solid var(--amber);
+            animation: fadeUp .3s ease .12s both;
+        }
+        .taksit-toggle {
+            width: 100%; display: flex; align-items: center; justify-content: space-between;
+            background: none; border: none; cursor: pointer; padding: 0;
+        }
+        .taksit-toggle-label { font-size: 14px; font-weight: 700; color: var(--txt); }
+        .taksit-toggle-arrow { font-size: 13px; color: var(--txt2); transition: transform .25s; }
+        .taksit-toggle-arrow.open { transform: rotate(180deg); }
+        .taksit-body { overflow: hidden; max-height: 0; transition: max-height .35s ease; }
+        .taksit-body.open { max-height: 600px; }
+        .taksit-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 7px 0; border-bottom: 1px solid rgba(217,119,6,.15);
+        }
+        .taksit-row:first-child { margin-top: 10px; }
+        .taksit-row:last-child  { border-bottom: none; }
+        .taksit-n { font-size: 14px; font-weight: 600; color: var(--txt); }
+        .taksit-v { font-size: 15px; font-weight: 800; color: var(--amber); }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── PRODUCTS ── */
+        /* ── SECTION HEADER ── */
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .section-title  { font-size: 16px; font-weight: 700; }
 
+        /* ── PRODUCT LIST ── */
         .product-item {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 13px 14px;
-            margin-bottom: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 4px rgba(0,0,0,.05);
-            gap: 8px;
+            background: var(--card); border-radius: 12px; padding: 11px 13px;
+            margin-bottom: 9px; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
         }
-        .product-info h3 { font-size: 15px; font-weight: 700; }
-        .product-info p  { font-size: 12px; color: var(--txt2); margin-top: 2px; }
-        .product-price   { font-size: 16px; font-weight: 800; color: var(--blue); white-space: nowrap; }
-        .product-actions { display: flex; gap: 5px; flex-shrink: 0; }
+        .product-name { font-size: 13px; font-weight: 700; flex-shrink: 0; }
+        .product-actions { display: flex; gap: 5px; flex-shrink: 0; margin-left: auto; }
+        .pkg-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 20px;
+            background: var(--blue-l); color: var(--blue);
+            font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+        }
+        .price-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 20px;
+            background: var(--green-l); color: var(--green);
+            font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+        }
 
-        .empty-state     { text-align: center; padding: 50px 20px; color: var(--txt2); }
-        .empty-icon      { font-size: 52px; margin-bottom: 12px; }
+        .empty-state  { text-align: center; padding: 50px 20px; color: var(--txt2); }
+        .empty-icon   { font-size: 52px; margin-bottom: 12px; }
 
         /* ── MODAL ── */
         .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,.45);
+            position: fixed; inset: 0; background: rgba(0,0,0,.45);
             display: flex; align-items: flex-end; justify-content: center;
-            z-index: 100;
-            opacity: 0; pointer-events: none;
-            transition: opacity .25s;
+            z-index: 100; opacity: 0; pointer-events: none; transition: opacity .25s;
         }
         .modal-overlay.open { opacity: 1; pointer-events: all; }
         .modal {
-            background: #fff;
-            border-radius: 22px 22px 0 0;
-            padding: 22px 18px;
-            padding-bottom: max(22px, env(safe-area-inset-bottom));
+            background: #fff; border-radius: 22px 22px 0 0;
+            padding: 22px 18px; padding-bottom: max(22px, env(safe-area-inset-bottom));
             width: 100%; max-width: 480px;
-            transform: translateY(100%);
-            transition: transform .3s ease;
+            transform: translateY(100%); transition: transform .3s ease;
+            max-height: 92vh; overflow-y: auto;
         }
         .modal-overlay.open .modal { transform: translateY(0); }
         .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
         .modal-title  { font-size: 18px; font-weight: 700; }
         .modal-close  {
-            background: var(--bg); border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            cursor: pointer; font-size: 16px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--txt2);
+            background: var(--bg); border: none; width: 32px; height: 32px;
+            border-radius: 50%; cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; color: var(--txt2);
         }
 
         /* ── SETTINGS ── */
         .setting-item {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 14px 0; border-bottom: 1px solid var(--border);
         }
         .setting-item:last-child { border-bottom: none; }
         .setting-label h4 { font-size: 15px; font-weight: 600; }
         .setting-label p  { font-size: 12px; color: var(--txt2); margin-top: 2px; }
         .setting-row { display: flex; align-items: center; gap: 5px; }
         .setting-input {
-            width: 85px;
-            padding: 8px 10px;
-            border: 1.5px solid var(--border);
-            border-radius: 9px;
-            font-size: 15px;
-            font-weight: 700;
-            text-align: right;
-            color: var(--blue);
-            outline: none;
-            -webkit-appearance: none;
+            width: 85px; padding: 8px 10px; border: 1.5px solid var(--border);
+            border-radius: 9px; font-size: 15px; font-weight: 700; text-align: right;
+            color: var(--blue); outline: none; -webkit-appearance: none;
         }
         .setting-input:focus { border-color: var(--blue); }
         .setting-unit { font-size: 13px; color: var(--txt2); font-weight: 600; }
 
         .info-box {
-            background: var(--blue-l);
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            font-size: 13px;
-            color: #1E40AF;
-            line-height: 1.55;
+            background: var(--blue-l); border-radius: 10px; padding: 12px 14px;
+            margin-bottom: 12px; font-size: 13px; color: #1E40AF; line-height: 1.55;
         }
 
         /* ── COPY ROW ── */
-        .copy-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-            margin-bottom: 4px;
-        }
+        .copy-row { display: flex; gap: 8px; margin-top: 4px; margin-bottom: 4px; }
         .copy-row .btn { flex: 1; }
 
         /* ── DIVIDER ── */
         .divider { height: 1px; background: var(--border); margin: 14px 0; }
 
-        /* ── TOAST ── */
-        .toast {
-            position: fixed;
-            bottom: 82px;
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            background: #0F172A;
-            color: #fff;
-            padding: 10px 22px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0;
-            transition: all .25s;
-            white-space: nowrap;
-            z-index: 200;
-            pointer-events: none;
-        }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
         /* ── BADGE ── */
         .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            background: var(--blue-l);
-            color: var(--blue);
+            display: inline-block; padding: 2px 8px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; background: var(--blue-l); color: var(--blue);
         }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed; bottom: 82px; left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #0F172A; color: #fff; padding: 10px 22px;
+            border-radius: 50px; font-size: 14px; font-weight: 500;
+            opacity: 0; transition: all .25s; white-space: nowrap;
+            z-index: 200; pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
-    <span class="header-icon">💰</span>
+    <span style="font-size:22px">💰</span>
     <h1>Vinov Fiyat Hesaplama</h1>
 </div>
 
-<!-- TAB CONTENT -->
 <div class="tab-content">
 
     <!-- ── HESAPLA ── -->
     <div class="tab-pane active" id="tab-calc">
-
         <div class="card" style="margin-top:4px">
             <div class="card-title">Ürün ve Fiyat</div>
-
             <div class="form-group">
                 <label class="form-label">Anlaşma Fiyatı (₺ +KDV)</label>
-                <input class="form-input" type="number" id="anlasma-fiyat"
-                       placeholder="0.00" step="0.01" inputmode="decimal">
+                <input class="form-input" type="number" id="anlasma-fiyat" placeholder="0.00" step="0.01" inputmode="decimal">
             </div>
-
             <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">Müşterinin Talep Ettiği Vade (Gün)</label>
-                <input class="form-input" type="number" id="talep-gun"
-                       placeholder="örn. 300" value="300" inputmode="numeric">
+                <input class="form-input" type="number" id="talep-gun" placeholder="örn. 300" value="300" inputmode="numeric">
             </div>
         </div>
 
         <button class="btn btn-primary" onclick="hesapla()">🧮 Hesapla</button>
 
-        <!-- Sonuçlar -->
         <div id="results-section" style="display:none">
             <div class="divider"></div>
-
             <div class="section-header">
                 <span class="section-title">Sonuçlar</span>
                 <span id="result-badge" class="badge"></span>
             </div>
-
             <div id="results-container"></div>
-
             <div class="copy-row">
                 <button class="btn btn-secondary" style="font-size:14px" onclick="kopyala()">📋 Metni Kopyala</button>
                 <button class="btn btn-secondary" style="font-size:14px" onclick="temizle()">✕ Temizle</button>
             </div>
         </div>
-
     </div>
 
     <!-- ── ÜRÜNLER ── -->
     <div class="tab-pane" id="tab-products">
         <div class="section-header" style="margin-top:4px">
-            <span class="section-title">Ürün Listesi</span>
-            <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ Yeni Ürün</button>
+            <span class="section-title">Ürün Fiyatları</span>
+            <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ Ekle</button>
         </div>
         <div id="product-list"></div>
     </div>
 
     <!-- ── AYARLAR ── -->
     <div class="tab-pane" id="tab-settings">
-
         <div class="info-box" style="margin-top:4px">
             ℹ️ Bu değerler Excel dosyanızdaki formüllerden alınmıştır. Oranlar değişirse buradan güncelleyebilirsiniz.
         </div>
-
         <div class="card">
             <div class="card-title">Hesaplama Parametreleri</div>
-
             <div class="setting-item">
                 <div class="setting-label">
                     <h4>Vinov Yıllık Faiz Oranı</h4>
@@ -405,7 +321,6 @@
                     <span class="setting-unit">%</span>
                 </div>
             </div>
-
             <div class="setting-item">
                 <div class="setting-label">
                     <h4>3 Ay Öteleme Faizi</h4>
@@ -416,24 +331,15 @@
                     <span class="setting-unit">%</span>
                 </div>
             </div>
-
-            <div class="setting-item">
-                <div class="setting-label">
-                    <h4>12 Taksit Çarpanı</h4>
-                    <p>Fiyat çarpım katsayısı</p>
-                </div>
-                <div class="setting-row">
-                    <input class="setting-input" type="number" id="taksit-mult" step="0.0001" onchange="saveSettings()">
-                    <span class="setting-unit">×</span>
-                </div>
-            </div>
         </div>
-
+        <div class="card">
+            <div class="card-title">Taksit Faizleri</div>
+            <div id="taksit-settings-list"></div>
+        </div>
         <div class="card">
             <div class="card-title">Uygulama</div>
             <p style="font-size:14px; color:var(--txt2); line-height:1.65">
-                Tüm ürün ve ayar verileri yalnızca cihazınızda saklanır.<br>
-                İnternet bağlantısı gerekmez.
+                Tüm veriler yalnızca cihazınızda saklanır.<br>İnternet bağlantısı gerekmez.
             </p>
         </div>
     </div>
@@ -442,90 +348,222 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-    <button class="nav-item active" id="nav-calc" onclick="switchTab('calc')">
-        <span class="nav-icon">🧮</span>
-        <span>Hesapla</span>
+    <button class="nav-item active" id="nav-calc"     onclick="switchTab('calc')">
+        <span class="nav-icon">🧮</span><span>Hesapla</span>
     </button>
-    <button class="nav-item" id="nav-products" onclick="switchTab('products')">
-        <span class="nav-icon">📦</span>
-        <span>Ürünler</span>
+    <button class="nav-item"        id="nav-products" onclick="switchTab('products')">
+        <span class="nav-icon">📦</span><span>Ürünler</span>
     </button>
-    <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
-        <span class="nav-icon">⚙️</span>
-        <span>Ayarlar</span>
+    <button class="nav-item"        id="nav-settings" onclick="switchTab('settings')">
+        <span class="nav-icon">⚙️</span><span>Ayarlar</span>
     </button>
 </nav>
 
-<!-- ADD/EDIT PRODUCT MODAL -->
+<!-- PRODUCT MODAL -->
 <div class="modal-overlay" id="product-modal" onclick="closeModalIfOverlay(event)">
     <div class="modal">
         <div class="modal-header">
-            <span class="modal-title" id="modal-title">Yeni Ürün</span>
+            <span class="modal-title" id="modal-title">Ürün Ekle</span>
             <button class="modal-close" onclick="closeProductModal()">✕</button>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">Ürün Grubu</label>
-            <input class="form-input" type="text" id="modal-group" placeholder="örn. İNSEKTİSİT">
         </div>
         <div class="form-group">
             <label class="form-label">Ürün Adı *</label>
-            <input class="form-input" type="text" id="modal-name" placeholder="örn. Naafi">
+            <select class="form-select" id="modal-name">
+                <option value="">— Seçiniz —</option>
+            </select>
         </div>
         <div class="form-group">
-            <label class="form-label">Anlaşma Fiyatı (₺) *</label>
-            <input class="form-input" type="number" id="modal-price" placeholder="0.00" step="0.01" inputmode="decimal">
+            <label class="form-label">FİYAT +KDV (₺)</label>
+            <input class="form-input" type="number" id="modal-top" placeholder="0.00" step="0.01" inputmode="decimal">
         </div>
-
         <button class="btn btn-primary" onclick="saveProduct()" style="margin-bottom:10px">Kaydet</button>
         <button class="btn btn-secondary" onclick="closeProductModal()">İptal</button>
     </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════
+// ════════════════════════════════
+//  ÜRÜN LİSTESİ (Excel'den)
+// ════════════════════════════════
+const URUN_LISTESI = [
+"ACS BAKIRHIDROKSIT - 2 KG","ACS FORTE 80 WP - 2 KG","ACS FORTE 80 WP - 800 G",
+"AFORS 700 - 1 L","AFORS 700 - 10 L","AFORS 700 - 17 L","AFORS 700 - 20 L","AFORS 700 - 25 L","AFORS 700 - 5 L",
+"AGILIS 10 SC - 1 L","AGILIS 10 SC - 5 L","AGILIS 10 SC - 50 ML",
+"AGN CAPTAN 50 WP - 200 G","AGN CAPTAN 50 WP - 3 KG","AGN CAPTAN 50 WP - 800 G","AGN CAPTAN 500 SC - 1 L",
+"AGNICOR 300 SC - 1 L","AGNICOR 300 SC - 250 ML","AGNICOR 300 SC - 400 ML",
+"AGNOTORIN 10 G - 4 KG","AGNOTORIN 150 EC - 1 L",
+"AGNUPAN 70 WP - 1 KG","AGNUPAN 70 WP - 500 G",
+"AGSHINE 50 WG - 400 G",
+"ALGA 600 - 1 KG","ALGA 600 - 400 G",
+"ALGEBAR SC - 1 L","ALGEBAR SC - 200 ML","ALGEBAR SC - 250 ML","ALGEBAR SC - 500 ML",
+"ALOPEC 1.8 EC - 100 ML","ALOPEC 1.8 EC - 250 ML","ALOPEC 1.8 EC - 5 L","ALOPEC 1.8 EC - 500 ML",
+"AMASSIS 25 EC - 1 L","AMASSIS 25 EC - 250 ML","AMASSIS 25 EC - 500 ML",
+"AMID 330 EC - 1 L","AMID 330 EC - 10 L","AMID 330 EC - 5 L",
+"AMINOCUTE - 1 L","AMINOCUTE - 20 L","AMINOCUTE - 5 L",
+"AMINOFIX - 1 KG","ANBIMEX - 5 L",
+"ANCORA 5 EC - 1 L","ANCORA 5 EC - 100 ML","ANCORA 5 EC - 250 ML","ANCORA 5 EC - 5 L","ANCORA 5 EC - 500 ML",
+"ANDOZONG CS 50 - 1 L (TRADING)","ANDOZONG CS 50 - 250 ML (TRADING)","ANDOZONG CS 50 - 500 ML (TRADING)",
+"ANHUI 40 SC - 1 L",
+"ANTALIA 250 EC - 1 L","ANTALIA 250 EC - 100 ML","ANTALIA 250 EC - 250 ML","ANTALIA 250 EC - 5 L","ANTALIA 250 EC - 500 ML",
+"ARALIX 480 SC - 100 ML","ARALIX 480 SC - 250 ML","ARALIX 480 SC - 500 ML",
+"ARGERUS 400 - 1 L","ARGERUS 400 - 1.6 L","ARGERUS 400 - 5 L",
+"ASTHION 320 SC - 1 L","ASTIVO WG 75 - 1 KG",
+"ASTRA PH DOWN - 1 L","ASTRA PH DOWN - 500 ML","ASTRA PH FLEX - 1 L",
+"ASTRACOP - 1 L","ASTRADEX - 1 L","ASTRADEX - 5 L",
+"ASTRADYN 125 FS - 1 L","ASTRADYN 125 FS - 20 L","ASTRADYN 125 FS - 25 L","ASTRADYN 125 FS - 500 ML",
+"ASTRAGIL - 1 L","ASTRAGIL - 250 ML",
+"ASTRALAN 35 WG - 100 G","ASTRALAN 35 WG - 50 G",
+"ASTRALISTO - 1 KG","ASTRALISTO - 800 G",
+"ASTRALOT 250 - 1 L","ASTRAN SC - 1 L","ASTRAN SC - 5 L",
+"ASTRANUR SL - 500 ML","ASTRAVAX 500 SC - 20 L","ASTRAXONIL - 1 L",
+"ASTROZE 240 SC - 250 ML","ASTROZE 240 SC - 500 ML",
+"ATTACK 72 SL - 1 L","ATTACK 72 SL - 5 L",
+"AVASTRA 200 SL - 1 L","AVASTRA 200 SL - 20 L","AVASTRA 200 SL - 5 L",
+"BARBELO 100 SC - 1 L","BARBELO 100 SC - 250 ML","BARBELO 100 SC - 500 ML",
+"BEDLIS 50 EC - 1 L","BERRLAN 50 WG - 150 G",
+"BEST STOPPER - 1 L","BEST STOPPER - 20 L","BEST STOPPER - 5 L",
+"BIZANTION 240 SC - 250 ML","BIZANTION 240 SC - 500 ML",
+"BLUEMAX BORDOLEX - 10 KG","BLUEMAX BORDOLEX - 800 G",
+"BORIKA - 1 L (ASTRANOVA - TRADING)","BORIKA - 5 L (ASTRANOVA - TRADING)",
+"CAPSELON 50 WP - 250 G","CAPSELON 50 WP - 400 G","CAPSELON 50 WP - 800 G",
+"CASTRONG 1","CASTRONG 20","CASTRONG 5",
+"CHAMER 240 SC - 250 ML","CHITOVAC - 1 L",
+"CLIMAXER SC - 250 ML","CLIMAXER SC - 500 ML",
+"CONCID 5 EC - 1 L","CONCID 5 EC - 250 ML","CONCID 5 EC - 500 ML",
+"CONSALT 240 OD - 1 L","CONSALT 240 OD - 400 ML",
+"COTMAS 35 FS - 1 L","COTMAS 35 FS - 100 ML","COTMAS 35 FS - 20 L","COTMAS 35 FS - 5 L","COTMAS 35 FS - 500 ML",
+"CROPSHIELD PLUS - 1 L","CROPSHIELD PLUS - 3 L",
+"CUPROFLOW CAFFARO - 1 LT","DARKEVEN SC - 200 ML",
+"DELTADOG 25 EC - 1 L","DELTADOG 25 EC - 100 ML","DELTADOG 25 EC - 250 ML","DELTADOG 25 EC - 5 L","DELTADOG 25 EC - 500 ML",
+"DERAST 20 - 1 KG","DERAST 20 - 100 G","DERAST 20 - 500 G",
+"DOGER AMIN - 1 L","DOGER AMIN - 17 L","DOGER AMIN - 5 L",
+"DOGER BAKIR 50 WP - 10 KG","DOGER BAKIR 50 WP - 4 KG","DOGER BAKIR 50 WP - 800 G",
+"DOGER ESTER - 1 L","DOGER ESTER - 17 L","DOGER ESTER - 5 L",
+"ELEGANS 50 WP - 400 G","EMINENT 125 ME - 200 ML","ERZEN 70 WP - 600 G",
+"ESMURY 240 SC - 1 L","ESMURY 240 SC - 100 ML","ESMURY 240 SC - 250 ML","ESMURY 240 SC - 500 ML",
+"EXCLAR 500 SC - 250 ML","EXCLAR 500 SC - 500 ML",
+"FANTIC M WG - 1 KG",
+"FEAROW 20 EC - 1 L","FEAROW 20 EC - 100 ML","FEAROW 20 EC - 250 ML","FEAROW 20 EC - 500 ML",
+"FOLIAX 240 SC - 1 L","FOLIAX 240 SC - 200 ML","FOLIAX 240 SC - 300 ML","FOLIAX 240 SC - 500 ML",
+"FONDET 240 E - 1 L","FONDET 240 E - 250 ML","FONDET 240 E - 500 ML","FONDET 4F - 1 L",
+"FRATH - 1 L","FUJION-S EC - 1 L","FUJION-S EC - 5 L","FYTOSAVE - 1 L",
+"GAYDER 108 EC - 1 L","GAYDER 108 EC - 250 ML","GAYDER 108 EC - 500 ML",
+"GILAMUS - 1 L","GILAMUS - 5 L",
+"GOODBYE PELLET - 1 KG (TRADING)","GOODBYE PELLET - 25 KG (TRADING)","GOODBYE PELLET - 250 G (TRADING)","GOODBYE PELLET - 500 G (TRADING)",
+"GRAISER 350 FS - 1 L","GRAISER 350 FS - 5 L","GRANAS SC - 5 L",
+"GROUND - 1 L","GROUND - 250 ML","GROUND - 500 ML",
+"HEROK-E - 50 ML","HUMIC TOTAL - 1 KG","HUMIC TOTAL - 10 KG","INFINITYY - 1 L",
+"KAPADOKIA 65 EC - 5 L","KAPADOKIA 65 EC - 500 ML",
+"KAVROL 48 SC - 1 L","KAVROL 48 SC - 250 ML",
+"KINGAST - 1 L","KINGAST - 5 L","KUTANA OPTI - 1 KG",
+"LACERTA 250 SC - 1 L","LACERTA 250 SC - 200 ML","LACERTA 250 SC - 300 ML",
+"LACERTA MAXX - 1 L","LACERTA MAXX - 250 ML","LACERTA MAXX - 300 ML","LACERTA MAXX - 400 ML",
+"LASYA - 1 L","LEILI2000 - 1 L","LEILI2000 - 500 ML",
+"LIBRO ( 7-7-7 + TE ) - 1 L","LIBRO ( 7-7-7 + TE ) - 5 L","LIBRO ( 7-7-7 + TE ) - 20 L",
+"LIBRO (3-25-3+TE) - 1 L","LIBRO (3-25-3+TE) - 5 L","LIBRO (3-25-3+TE) - 20 L",
+"LIBRO (3-3-12+TE) - 1 L","LIBRO (3-3-12+TE) - 5 L","LIBRO (3-3-12+TE) - 20 L",
+"LIBRO (5-20-0+TE) - 1 L","LIBRO (5-20-0+TE) - 5 L","LIBRO (5-20-0+TE) - 20 L",
+"LIBRO ASTRAMIX - 1 L","LIBRO HUMIC - 5 L","LIBRO HUMIC - 20 L",
+"LIKOFERT - 5 L","LIKOFERT - 20 L",
+"MADBON - 1 L","MADBON M-60 - 1 L","MADBON-M - 1 L",
+"MAGNESYA 50 SC - 1 L","MARDE DF - 800 G",
+"MAXTRINE - 1 KG","MAXTRINE - 5 KG","MAXTRINE - 25 KG",
+"NADAS - 1 L","NADAS - 5 L",
+"NATUGREN 20 SC - 1 L","NATUGREN 20 SC - 200 ML","NATUGREN 20 SC - 250 ML","NATUGREN 20 SC - 500 ML",
+"NEVREST EC - 1 L","NEVREST EC - 5 L",
+"NINGBO 25 EC - 1 L","NINGBO 25 EC - 100 ML","NINGBO 25 EC - 250 ML","NINGBO 25 EC - 5 L",
+"NORUS ( 7-7-7 + TE ) - 1 L","NORUS ( 7-7-7 + TE ) - 20 L","NORUS- ( 7-7-7 + TE ) - 5 L",
+"NORUS (3-25-3+TE) - 1 L","NORUS (3-25-3+TE) - 5 L","NORUS (3-25-3+TE) - 20 L",
+"NORUS (3-3-12+TE) - 1 L","NORUS (3-3-12+TE) - 5 L","NORUS (3-3-12+TE) - 20 L",
+"NORUS (5-20-0+TE) - 1 L","NORUS (5-20-0+TE) - 5 L","NORUS (5-20-0+TE) - 20 L",
+"NORUS ASTRAMIX - 1 L","NORUS ASTRAMIX - 5 L","NORUS ASTRAMIX - 20 L",
+"NORUS BORNOVA - 1 L","NORUS BORNOVA - 5 L",
+"NORUS CALIBOR - 1 L","NORUS CALIBOR - 5 L","NORUS CALIBOR - 20 L",
+"NORUS HUMIC - 1 L","NORUS HUMIC - 5 L","NORUS HUMIC - 20 L",
+"NOVACUT - 400 G","NOVACUT - 800 G",
+"NOVADAX 36 SL - 1 L","NOVADAX 36 SL - 100 ML","NOVADAX 36 SL - 250 ML","NOVADAX 36 SL - 500 ML",
+"NOVAGAP 600 SC - 1 L",
+"NOVAGIBB SL - 1 L (ALC)","NOVAGIBB SL - 5 L (ALC)","NOVAGIBB SL - 20 L (ALC)","NOVAGIBB SL - 500 ML (ALC)",
+"NOVAMITE 10 SC - 1 L","NOVAMITE 10 SC - 250 ML",
+"NOVARAL 10 WG - 5 KG","NOVASAT 75 WP - 40 G",
+"NOVIRAD 100 EC - 1 L","NOVIRAD 100 EC - 10 L","NOVIRAD 100 EC - 250 ML","NOVIRAD 100 EC - 500 ML",
+"PASCAL 5 SC - 5 L","PASCAL 5 SC - 50 ML",
+"PESTIGE 25 WP - 600 G","PESTIGE 250 EC - 1 L","PESTIGE 250 EC - 500 ML",
+"PIRINOVA - 5 L",
+"POTEGON 20 SP - 1 KG","POTEGON 20 SP - 100 G","POTEGON 20 SP - 400 G",
+"PRESIDIUM - 1 L",
+"PROYZA 72 SL - 1 L","PROYZA 72 SL - 100 ML","PROYZA 72 SL - 250 ML","PROYZA 72 SL - 500 ML",
+"REXIRON % 6 Fe - 1 KG (ASTRANOVA)","REXIRON % 6 FE - 25 KG (ASTRANOVA)","REXIRON % 6 Fe - 5 KG (ASTRANOVA)",
+"RHAMSES 20 WP - 1 KG","RHAMSES 20 WP - 500 G",
+"ROOTER UP (8-7-5) - 1 L","ROOTER UP (8-7-5) - 4 L",
+"RTMOST - 1 L",
+"SAUPOLO 80 SC - 1 L","SAUPOLO 80 SC - 5 L","SAUPOLO 80 SC - 20 L",
+"SAUPOLO 80 WG - 800 G","SAUPOLO 80 WG 10 KG","SAUPOLO 80 WG - 20 KG (TRADING)",
+"SEMINO - 1 L",
+"SHANGDONG 240 EC - 1 L","SHANGDONG 240 EC - 200 ML","SHANGDONG 240 EC - 500 ML",
+"SHAOLIN 100 EC - 1 L","SHAOLIN 100 EC - 250 ML",
+"SIMIRNA-X - 1 L",
+"SPIDOLL DF - 400 G","SPIDOLL DF - 80 G",
+"SPINFARM 240 SC - 250 ML",
+"SPODHEL SG - 1 KG","SPODHEL SG - 100 G","SPODHEL SG - 350 G","SPODHEL SG - 400 G",
+"STACID EC - 1 L","STACID EC - 5 L",
+"STIN 80 WG - 1 KG","STIN 80 WG - 800 G","STIN 80 WP - 1 KG",
+"SUDOOR 400 SC - 1 L","SUDOOR 400 SC - 5 L",
+"SYNET WG - 800 G","TALMIN-S 100 ML",
+"TAURICA 50 WG - 150 G",
+"TERUYA 50 WG - 100 G","TERUYA 50 WG - 500 G",
+"TUNADIS 100 EC - 100 ML","TUNADIS 100 EC - 250 ML","TUNADIS 100 EC - 500 ML",
+"TUNCHII 150 SC - 100 ML","TUNCHII 150 SC - 250 ML","TUNCHII 150 SC - 500 ML",
+"VIGROSTAR - 1 KG",
+"VIGROW (8-8-6) 1 L","VIGROW (8-8-6) - 5 L",
+"YEKDOZ WG - 200 G","YEKDOZ WG - 400 G",
+"ZEYMA OF 120 - 800 ML",
+"ZOYTO - 1 L","ZOYTO - 5 L"
+];
+
+const TAKSIT_VARSAYILAN = [6.51,8.79,11.17,13.58,16.12,18.76,21.54,24.77,27.80,31.15,35.14];
+
+// ════════════════════════════════
 //  STATE
-// ════════════════════════════════════════
+// ════════════════════════════════
 let state = {
     products: [],
-    settings: { vinovRate: 39, ucayRate: 8.5, taksitMult: 1.3514 }
+    settings: { vinovRate: 39, ucayRate: 8.5, taksitOranlari: [...TAKSIT_VARSAYILAN] }
 };
-
 let editingId = null;
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 //  INIT
-// ════════════════════════════════════════
+// ════════════════════════════════
 function init() {
-    const saved = localStorage.getItem('vinovApp_v1');
+    const saved = localStorage.getItem('vinovApp_v2');
     if (saved) {
         try {
             const d = JSON.parse(saved);
             state.products = d.products || [];
             state.settings = Object.assign(state.settings, d.settings || {});
         } catch(e) {}
-    } else {
-        // Excel'den gelen varsayılan ürün
-        state.products = [
-            { id: 1, group: 'İNSEKTİSİT', name: 'Naafi', price: 300 }
-        ];
-        persist();
     }
+    // Ürün seçimini doldur
+    const sel = document.getElementById('modal-name');
+    URUN_LISTESI.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u; opt.textContent = u;
+        sel.appendChild(opt);
+    });
     renderSettings();
-    renderProductSelect();
     renderProductList();
 }
 
 function persist() {
-    localStorage.setItem('vinovApp_v1', JSON.stringify(state));
+    localStorage.setItem('vinovApp_v2', JSON.stringify(state));
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 //  TABS
-// ════════════════════════════════════════
+// ════════════════════════════════
 function switchTab(tab) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -534,64 +572,58 @@ function switchTab(tab) {
     if (tab === 'products') renderProductList();
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 //  CALCULATOR
-// ════════════════════════════════════════
-function onProductSelect() {
-    const id = parseInt(document.getElementById('product-select').value);
-    if (!id) return;
-    const p = state.products.find(x => x.id === id);
-    if (p) document.getElementById('anlasma-fiyat').value = p.price;
-}
-
+// ════════════════════════════════
 function hesapla() {
     const fiyat = parseFloat(document.getElementById('anlasma-fiyat').value);
     const gun   = parseInt(document.getElementById('talep-gun').value);
-
     if (!fiyat || fiyat <= 0) { showToast('Geçerli bir fiyat girin'); return; }
     if (!gun   || gun   <= 0) { showToast('Geçerli bir vade günü girin'); return; }
 
-    const { vinovRate, ucayRate, taksitMult } = state.settings;
+    const { vinovRate, ucayRate } = state.settings;
+    const faizOran = vinovRate / 365 * gun / 100;
+    if (faizOran >= 1) { showToast('Vade çok uzun!'); return; }
 
-    // Formüller (Excel ile birebir aynı)
-    const faizOran   = vinovRate / 365 * gun / 100;           // =E2/F2*G2/100
-    if (faizOran >= 1) { showToast('Vade çok uzun — faiz oranı %100\'ü aşıyor!'); return; }
-
-    const vinovFiyat = fiyat / (1 - faizOran);                // =D4/(1-H2)
-    const ucayFiyat  = fiyat / (1 - ucayRate / 100);          // =D4/(1-$D$2)
-    const taksFiyat  = fiyat * taksitMult;                     // =D4*1.3514
-
-    const faizPct    = (faizOran * 100).toFixed(2);
+    const vinovFiyat = fiyat / (1 - faizOran);
+    const ucayFiyat  = fiyat / (1 - ucayRate / 100);
 
     document.getElementById('result-badge').textContent = gun + ' gün';
 
+    const taksitRows = state.settings.taksitOranlari.map((o, i) =>
+        `<div class="taksit-row">
+            <span class="taksit-n">${i+2} Taksit</span>
+            <span class="taksit-v">${tl(fiyat*(1+o/100))}</span>
+        </div>`
+    ).join('');
+
     document.getElementById('results-container').innerHTML = `
         <div class="result-card vinov">
-            <div>
-                <div class="r-label">Vinov Fiyatı</div>
-            </div>
+            <div><div class="r-label">Vinov Fiyatı</div></div>
             <div class="r-value">${tl(vinovFiyat)}</div>
         </div>
         <div class="result-card ucay">
-            <div>
-                <div class="r-label">3 Ay Ötelemeli</div>
-            </div>
+            <div><div class="r-label">3 Ay Ötelemeli</div></div>
             <div class="r-value">${tl(ucayFiyat)}</div>
         </div>
-        <div class="result-card taksit">
-            <div>
-                <div class="r-label">12 Taksit</div>
-            </div>
-            <div class="r-value">${tl(taksFiyat)}</div>
-        </div>
-    `;
+        <div class="taksit-card">
+            <button class="taksit-toggle" onclick="toggleTaksit()">
+                <span class="taksit-toggle-label">📋 Taksit Seçenekleri</span>
+                <span class="taksit-toggle-arrow" id="taksit-arrow">▼</span>
+            </button>
+            <div class="taksit-body" id="taksit-body">${taksitRows}</div>
+        </div>`;
 
-    window._lastCalc = { fiyat, gun, faizPct, vinovFiyat, ucayFiyat, taksFiyat };
-
+    window._lastCalc = { fiyat, gun, vinovFiyat, ucayFiyat };
     document.getElementById('results-section').style.display = 'block';
     setTimeout(() => {
-        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        document.getElementById('results-section').scrollIntoView({ behavior:'smooth', block:'nearest' });
     }, 80);
+}
+
+function toggleTaksit() {
+    document.getElementById('taksit-body').classList.toggle('open');
+    document.getElementById('taksit-arrow').classList.toggle('open');
 }
 
 function temizle() {
@@ -604,66 +636,61 @@ function temizle() {
 function kopyala() {
     if (!window._lastCalc) return;
     const c = window._lastCalc;
+    const taksitSatirlar = state.settings.taksitOranlari.map((o,i) =>
+        ` ${i+2} Taksit: ${tl(c.fiyat*(1+o/100))}`
+    ).join('\n');
     const metin =
         `Anlaşma Fiyatı : ${tl(c.fiyat)}\n` +
-        `Vade            : ${c.gun} gün\n\n` +
-        `Vinov Fiyatı    : ${tl(c.vinovFiyat)}\n` +
-        `3 Ay Ötelemeli  : ${tl(c.ucayFiyat)}\n` +
-        `12 Taksit       : ${tl(c.taksFiyat)}`;
-
+        `Vade           : ${c.gun} gün\n\n` +
+        `Vinov Fiyatı   : ${tl(c.vinovFiyat)}\n` +
+        `3 Ay Ötelemeli : ${tl(c.ucayFiyat)}\n\n` +
+        `Taksit Tablosu:\n${taksitSatirlar}`;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(metin).then(() => showToast('✓ Kopyalandı!'));
     } else {
         const el = document.createElement('textarea');
-        el.value = metin;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+        el.value = metin; document.body.appendChild(el); el.select();
+        document.execCommand('copy'); document.body.removeChild(el);
         showToast('✓ Kopyalandı!');
     }
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 //  PRODUCTS
-// ════════════════════════════════════════
+// ════════════════════════════════
+function splitProduct(fullName) {
+    const idx = fullName.indexOf(' - ');
+    if (idx === -1) return { name: fullName, pkg: '' };
+    return { name: fullName.substring(0, idx), pkg: fullName.substring(idx + 3) };
+}
+
 function renderProductList() {
     const el = document.getElementById('product-list');
     if (!state.products.length) {
         el.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><p>Henüz ürün eklenmemiş</p></div>`;
         return;
     }
-    el.innerHTML = state.products.map(p => `
+    el.innerHTML = state.products.map(p => {
+        const { name, pkg } = splitProduct(p.name);
+        return `
         <div class="product-item">
-            <div class="product-info">
-                <h3>${esc(p.name)}</h3>
-                <p>${esc(p.group || '—')}</p>
-            </div>
-            <div class="product-price">${tl(p.price)}</div>
+            <span class="product-name">${esc(name)}</span>
+            ${pkg ? `<span class="pkg-badge">${esc(pkg)}</span>` : ''}
+            ${p.topFiyat ? `<span class="price-badge">${tl(p.topFiyat)}</span>` : ''}
             <div class="product-actions">
                 <button class="btn btn-secondary btn-sm" onclick="editProduct(${p.id})">✏️</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>
             </div>
-        </div>
-    `).join('');
-}
-
-function renderProductSelect() {
-    const sel = document.getElementById('product-select');
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">— Elle fiyat gir —</option>' +
-        state.products.map(p => `<option value="${p.id}">${esc(p.name)} — ${tl(p.price)}</option>`).join('');
-    sel.value = cur;
+        </div>`;
+    }).join('');
 }
 
 function showAddProduct() {
     editingId = null;
-    document.getElementById('modal-title').textContent = 'Yeni Ürün';
-    document.getElementById('modal-group').value = '';
-    document.getElementById('modal-name').value  = '';
-    document.getElementById('modal-price').value = '';
+    document.getElementById('modal-title').textContent = 'Ürün Ekle';
+    document.getElementById('modal-name').value = '';
+    document.getElementById('modal-top').value  = '';
     document.getElementById('product-modal').classList.add('open');
-    setTimeout(() => document.getElementById('modal-name').focus(), 350);
 }
 
 function editProduct(id) {
@@ -671,32 +698,27 @@ function editProduct(id) {
     if (!p) return;
     editingId = id;
     document.getElementById('modal-title').textContent = 'Ürünü Düzenle';
-    document.getElementById('modal-group').value = p.group || '';
-    document.getElementById('modal-name').value  = p.name;
-    document.getElementById('modal-price').value = p.price;
+    document.getElementById('modal-name').value = p.name;
+    document.getElementById('modal-top').value  = p.topFiyat || '';
     document.getElementById('product-modal').classList.add('open');
 }
 
 function saveProduct() {
-    const group = document.getElementById('modal-group').value.trim();
-    const name  = document.getElementById('modal-name').value.trim();
-    const price = parseFloat(document.getElementById('modal-price').value);
+    const name     = document.getElementById('modal-name').value;
+    const topFiyat = parseFloat(document.getElementById('modal-top').value) || null;
 
-    if (!name)           { showToast('Ürün adı gerekli'); return; }
-    if (!price || price <= 0) { showToast('Geçerli bir fiyat girin'); return; }
+    if (!name) { showToast('Ürün seçiniz'); return; }
 
     if (editingId) {
         const i = state.products.findIndex(x => x.id === editingId);
-        state.products[i] = { ...state.products[i], group, name, price };
-        showToast('Ürün güncellendi');
+        state.products[i] = { ...state.products[i], name, topFiyat };
+        showToast('Güncellendi');
     } else {
-        state.products.push({ id: Date.now(), group, name, price });
+        state.products.push({ id: Date.now(), name, topFiyat });
         showToast('Ürün eklendi');
     }
-
     persist();
     renderProductList();
-    renderProductSelect();
     closeProductModal();
 }
 
@@ -705,8 +727,7 @@ function deleteProduct(id) {
     state.products = state.products.filter(x => x.id !== id);
     persist();
     renderProductList();
-    renderProductSelect();
-    showToast('Ürün silindi');
+    showToast('Silindi');
 }
 
 function closeProductModal() {
@@ -716,47 +737,56 @@ function closeModalIfOverlay(e) {
     if (e.target.id === 'product-modal') closeProductModal();
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════
 //  SETTINGS
-// ════════════════════════════════════════
+// ════════════════════════════════
 function renderSettings() {
-    document.getElementById('vinov-rate').value   = state.settings.vinovRate;
-    document.getElementById('ucay-rate').value    = state.settings.ucayRate;
-    document.getElementById('taksit-mult').value  = state.settings.taksitMult;
-}
+    document.getElementById('vinov-rate').value = state.settings.vinovRate;
+    document.getElementById('ucay-rate').value  = state.settings.ucayRate;
 
+    const list = document.getElementById('taksit-settings-list');
+    list.innerHTML = state.settings.taksitOranlari.map((o, i) => `
+        <div class="setting-item">
+            <div class="setting-label"><h4>${i+2} Taksit</h4></div>
+            <div class="setting-row">
+                <input class="setting-input" type="number" id="taksit-oran-${i}"
+                    value="${o}" step="0.01" onchange="saveTaksitOran(${i})">
+                <span class="setting-unit">%</span>
+            </div>
+        </div>`
+    ).join('');
+}
 function saveSettings() {
-    state.settings.vinovRate  = parseFloat(document.getElementById('vinov-rate').value)  || 39;
-    state.settings.ucayRate   = parseFloat(document.getElementById('ucay-rate').value)   || 8.5;
-    state.settings.taksitMult = parseFloat(document.getElementById('taksit-mult').value) || 1.3514;
+    state.settings.vinovRate = parseFloat(document.getElementById('vinov-rate').value) || 39;
+    state.settings.ucayRate  = parseFloat(document.getElementById('ucay-rate').value)  || 8.5;
     persist();
     showToast('Ayarlar kaydedildi');
 }
-
-// ════════════════════════════════════════
-//  UTILITIES
-// ════════════════════════════════════════
-function tl(v) {
-    return '₺\u202F' + v.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function saveTaksitOran(i) {
+    const val = parseFloat(document.getElementById('taksit-oran-' + i).value);
+    if (!isNaN(val) && val >= 0) {
+        state.settings.taksitOranlari[i] = val;
+        persist();
+        showToast((i+2) + ' Taksit faizi kaydedildi');
+    }
 }
 
+// ════════════════════════════════
+//  UTILS
+// ════════════════════════════════
+function tl(v) {
+    return '₺\u202F' + v.toLocaleString('tr-TR', { minimumFractionDigits:2, maximumFractionDigits:2 });
+}
 function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 function showToast(msg) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
+    t.textContent = msg; t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ════════════════════════════════════════
-//  SERVICE WORKER
-// ════════════════════════════════════════
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 init();
 </script>
