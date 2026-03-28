@@ -126,6 +126,7 @@
         .result-card.vinov { background: var(--blue-l);  border-left: 4px solid var(--blue);  }
         .result-card.ucay  { background: var(--green-l); border-left: 4px solid var(--green); animation-delay:.06s; }
         .r-label { font-size: 14px; font-weight: 700; }
+        .r-vade  { font-size: 11px; color: var(--txt2); margin-top: 3px; }
         .r-value { font-size: 22px; font-weight: 800; }
         .result-card.vinov .r-value { color: var(--blue); }
         .result-card.ucay  .r-value { color: var(--green); }
@@ -208,6 +209,26 @@
             display: flex; align-items: center; justify-content: center; color: var(--txt2);
         }
 
+        /* ── AUTOCOMPLETE ── */
+        .ac-wrapper { position: relative; }
+        .ac-list {
+            display: none;
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: #fff;
+            border: 1.5px solid var(--blue);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 220px; overflow-y: auto;
+            z-index: 20;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        }
+        .ac-item {
+            padding: 11px 14px; font-size: 15px; cursor: pointer;
+            border-bottom: 1px solid var(--border);
+        }
+        .ac-item:last-child { border-bottom: none; }
+        .ac-item:active, .ac-item:hover { background: var(--bg); }
+
         /* ── SETTINGS ── */
         .setting-item {
             display: flex; align-items: center; justify-content: space-between;
@@ -269,6 +290,15 @@
     <div class="tab-pane active" id="tab-calc">
         <div class="card" style="margin-top:4px">
             <div class="card-title">Ürün ve Fiyat</div>
+            <div class="form-group">
+                <label class="form-label">Ürün Ara</label>
+                <div class="ac-wrapper">
+                    <input class="form-input" type="text" id="hesap-urun-input"
+                        placeholder="Ürün adı yazın..." autocomplete="off"
+                        oninput="filterHesaplaUrun()" onblur="hideHesaplaAc()">
+                    <div class="ac-list" id="hesap-ac-list"></div>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="form-label">Anlaşma Fiyatı (₺ +KDV)</label>
                 <input class="form-input" type="number" id="anlasma-fiyat" placeholder="0.00" step="0.01" inputmode="decimal">
@@ -368,8 +398,17 @@
         </div>
         <div class="form-group">
             <label class="form-label">Ürün Adı *</label>
-            <select class="form-select" id="modal-name">
-                <option value="">— Seçiniz —</option>
+            <div class="ac-wrapper">
+                <input class="form-input" type="text" id="modal-name-input"
+                    placeholder="Yazmaya başlayın..." autocomplete="off"
+                    oninput="filterUrunler()" onblur="hideAcList()">
+                <div class="ac-list" id="ac-list"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Ambalaj</label>
+            <select class="form-select" id="modal-pkg">
+                <option value="">— Önce ürün seçin —</option>
             </select>
         </div>
         <div class="form-group">
@@ -523,6 +562,17 @@ const URUN_LISTESI = [
 "ZOYTO - 1 L","ZOYTO - 5 L"
 ];
 
+// Benzersiz ürün adları ve ambalajları
+const URUN_MAP = {};
+URUN_LISTESI.forEach(full => {
+    const idx = full.indexOf(' - ');
+    const name = idx === -1 ? full : full.substring(0, idx);
+    const pkg  = idx === -1 ? ''   : full.substring(idx + 3);
+    if (!URUN_MAP[name]) URUN_MAP[name] = [];
+    if (pkg) URUN_MAP[name].push(pkg);
+});
+const UNIQUE_NAMES = Object.keys(URUN_MAP).sort();
+
 const TAKSIT_VARSAYILAN = [6.51,8.79,11.17,13.58,16.12,18.76,21.54,24.77,27.80,31.15,35.14];
 
 // ════════════════════════════════
@@ -546,13 +596,6 @@ function init() {
             state.settings = Object.assign(state.settings, d.settings || {});
         } catch(e) {}
     }
-    // Ürün seçimini doldur
-    const sel = document.getElementById('modal-name');
-    URUN_LISTESI.forEach(u => {
-        const opt = document.createElement('option');
-        opt.value = u; opt.textContent = u;
-        sel.appendChild(opt);
-    });
     renderSettings();
     renderProductList();
 }
@@ -599,7 +642,10 @@ function hesapla() {
 
     document.getElementById('results-container').innerHTML = `
         <div class="result-card vinov">
-            <div><div class="r-label">Vinov Fiyatı</div></div>
+            <div>
+                <div class="r-label">Vinov Fiyatı</div>
+                <div class="r-vade">(${vadeTarihi(gun)})</div>
+            </div>
             <div class="r-value">${tl(vinovFiyat)}</div>
         </div>
         <div class="result-card ucay">
@@ -628,6 +674,7 @@ function toggleTaksit() {
 
 function temizle() {
     document.getElementById('results-section').style.display = 'none';
+    document.getElementById('hesap-urun-input').value = '';
     document.getElementById('anlasma-fiyat').value = '';
     document.getElementById('talep-gun').value = '300';
     window._lastCalc = null;
@@ -658,6 +705,75 @@ function kopyala() {
 // ════════════════════════════════
 //  PRODUCTS
 // ════════════════════════════════
+function filterHesaplaUrun() {
+    const q = document.getElementById('hesap-urun-input').value.toUpperCase().trim();
+    const list = document.getElementById('hesap-ac-list');
+    if (!q) { list.style.display = 'none'; return; }
+    const matches = state.products.filter(p => p.name.toUpperCase().includes(q)).slice(0, 20);
+    if (!matches.length) { list.style.display = 'none'; return; }
+    list.innerHTML = matches.map(p => {
+        const { name, pkg } = splitProduct(p.name);
+        const label = pkg ? `${name} <span style="color:var(--blue);font-size:12px">${pkg}</span>` : name;
+        return `<div class="ac-item" onmousedown="selectHesaplaUrun(${p.id})">${label}</div>`;
+    }).join('');
+    list.style.display = 'block';
+}
+
+function selectHesaplaUrun(id) {
+    const p = state.products.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('hesap-urun-input').value = p.name;
+    document.getElementById('hesap-ac-list').style.display = 'none';
+    if (p.topFiyat) {
+        document.getElementById('anlasma-fiyat').value = p.topFiyat;
+        showToast('Fiyat otomatik girildi');
+    } else {
+        document.getElementById('anlasma-fiyat').value = '';
+        showToast('Bu ürün için fiyat girilmemiş');
+    }
+}
+
+function hideHesaplaAc() {
+    setTimeout(() => {
+        document.getElementById('hesap-ac-list').style.display = 'none';
+    }, 150);
+}
+
+function filterUrunler() {
+    const q = document.getElementById('modal-name-input').value.toUpperCase().trim();
+    const list = document.getElementById('ac-list');
+    if (!q) { list.style.display = 'none'; return; }
+    const matches = UNIQUE_NAMES.filter(n => n.includes(q)).slice(0, 25);
+    if (!matches.length) { list.style.display = 'none'; return; }
+    list.innerHTML = matches.map(n =>
+        `<div class="ac-item" onmousedown="selectUrun('${n.replace(/'/g,"\\'")}')">${n}</div>`
+    ).join('');
+    list.style.display = 'block';
+}
+
+function selectUrun(name) {
+    document.getElementById('modal-name-input').value = name;
+    document.getElementById('ac-list').style.display = 'none';
+    updatePkgSelect(name, '');
+}
+
+function hideAcList() {
+    setTimeout(() => {
+        document.getElementById('ac-list').style.display = 'none';
+    }, 150);
+}
+
+function updatePkgSelect(baseName, selectedPkg) {
+    const sel = document.getElementById('modal-pkg');
+    const pkgs = URUN_MAP[baseName] || [];
+    if (!pkgs.length) {
+        sel.innerHTML = '<option value="">— Ambalaj yok —</option>';
+        return;
+    }
+    sel.innerHTML = '<option value="">— Seçiniz —</option>' +
+        pkgs.map(p => `<option value="${p}" ${p === selectedPkg ? 'selected' : ''}>${p}</option>`).join('');
+}
+
 function splitProduct(fullName) {
     const idx = fullName.indexOf(' - ');
     if (idx === -1) return { name: fullName, pkg: '' };
@@ -688,26 +804,32 @@ function renderProductList() {
 function showAddProduct() {
     editingId = null;
     document.getElementById('modal-title').textContent = 'Ürün Ekle';
-    document.getElementById('modal-name').value = '';
-    document.getElementById('modal-top').value  = '';
+    document.getElementById('modal-name-input').value = '';
+    document.getElementById('modal-pkg').innerHTML = '<option value="">— Önce ürün seçin —</option>';
+    document.getElementById('modal-top').value = '';
     document.getElementById('product-modal').classList.add('open');
+    setTimeout(() => document.getElementById('modal-name-input').focus(), 350);
 }
 
 function editProduct(id) {
     const p = state.products.find(x => x.id === id);
     if (!p) return;
     editingId = id;
+    const { name, pkg } = splitProduct(p.name);
     document.getElementById('modal-title').textContent = 'Ürünü Düzenle';
-    document.getElementById('modal-name').value = p.name;
-    document.getElementById('modal-top').value  = p.topFiyat || '';
+    document.getElementById('modal-name-input').value = name;
+    updatePkgSelect(name, pkg);
+    document.getElementById('modal-top').value = p.topFiyat || '';
     document.getElementById('product-modal').classList.add('open');
 }
 
 function saveProduct() {
-    const name     = document.getElementById('modal-name').value;
+    const baseName = document.getElementById('modal-name-input').value.trim();
+    const pkg      = document.getElementById('modal-pkg').value;
+    const name     = baseName + (pkg ? ' - ' + pkg : '');
     const topFiyat = parseFloat(document.getElementById('modal-top').value) || null;
 
-    if (!name) { showToast('Ürün seçiniz'); return; }
+    if (!baseName) { showToast('Ürün adı girin'); return; }
 
     if (editingId) {
         const i = state.products.findIndex(x => x.id === editingId);
@@ -774,6 +896,14 @@ function saveTaksitOran(i) {
 // ════════════════════════════════
 //  UTILS
 // ════════════════════════════════
+function vadeTarihi(gun) {
+    const aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    const bugun = new Date();
+    bugun.setHours(0, 0, 0, 0);
+    bugun.setDate(bugun.getDate() + gun);
+    return bugun.getDate() + ' ' + aylar[bugun.getMonth()] + ' ' + bugun.getFullYear();
+}
+
 function tl(v) {
     return '₺\u202F' + v.toLocaleString('tr-TR', { minimumFractionDigits:2, maximumFractionDigits:2 });
 }
