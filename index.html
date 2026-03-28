@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vinov Fiyat</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Vinov Hesap">
+    <meta name="theme-color" content="#1D4ED8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        :root {
+            --blue:   #1D4ED8;
+            --blue-l: #EFF6FF;
+            --green:  #059669;
+            --green-l:#ECFDF5;
+            --amber:  #D97706;
+            --amber-l:#FFFBEB;
+            --red:    #DC2626;
+            --bg:     #F1F5F9;
+            --card:   #FFFFFF;
+            --txt:    #0F172A;
+            --txt2:   #64748B;
+            --border: #E2E8F0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: var(--blue);
+            color: #fff;
+            padding: 14px 20px;
+            padding-top: max(14px, env(safe-area-inset-top));
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(29,78,216,.35);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-icon { font-size: 22px; }
+        .header h1 { font-size: 17px; font-weight: 700; letter-spacing: -.3px; flex: 1; }
+
+        /* ── TAB CONTENT ── */
+        .tab-content { flex: 1; overflow-y: auto; padding-bottom: 72px; }
+        .tab-pane { display: none; padding: 14px 14px 0; }
+        .tab-pane.active { display: block; }
+
+        /* ── BOTTOM NAV ── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding-bottom: env(safe-area-inset-bottom);
+            box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+            z-index: 50;
+        }
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 9px 0;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--txt2);
+            font-size: 11px;
+            font-weight: 600;
+            gap: 3px;
+            transition: color .15s;
+        }
+        .nav-item.active { color: var(--blue); }
+        .nav-icon { font-size: 21px; }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.06);
+        }
+        .card-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            color: var(--txt2);
+            margin-bottom: 14px;
+        }
+
+        /* ── FORM ── */
+        .form-group { margin-bottom: 13px; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--txt2); margin-bottom: 6px; }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--txt);
+            background: var(--bg);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: border-color .15s, background .15s;
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: var(--blue);
+            background: #fff;
+        }
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 38px;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity .15s, transform .1s;
+            letter-spacing: .2px;
+        }
+        .btn:active { opacity: .85; transform: scale(.98); }
+        .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 14px rgba(29,78,216,.3); }
+        .btn-secondary { background: var(--bg); color: var(--txt); border: 1.5px solid var(--border); }
+        .btn-danger { background: #FEE2E2; color: var(--red); }
+        .btn-sm { padding: 8px 13px; font-size: 13px; width: auto; border-radius: 8px; display: inline-block; }
+
+        /* ── RESULT CARDS ── */
+        .result-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: var(--txt2);
+            margin: 16px 0 10px;
+        }
+        .result-card {
+            border-radius: 14px;
+            padding: 15px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeUp .3s ease both;
+        }
+        .result-card.vinov  { background: var(--blue-l);  border-left: 4px solid var(--blue);  }
+        .result-card.ucay   { background: var(--green-l); border-left: 4px solid var(--green); }
+        .result-card.taksit { background: var(--amber-l); border-left: 4px solid var(--amber); }
+        .result-card:nth-child(2) { animation-delay: .06s; }
+        .result-card:nth-child(3) { animation-delay: .12s; }
+
+        .r-label { font-size: 14px; font-weight: 700; }
+        .r-sub   { font-size: 11px; color: var(--txt2); margin-top: 2px; }
+        .r-value { font-size: 22px; font-weight: 800; }
+        .result-card.vinov  .r-value { color: var(--blue);  }
+        .result-card.ucay   .r-value { color: var(--green); }
+        .result-card.taksit .r-value { color: var(--amber); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── PRODUCTS ── */
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .section-title  { font-size: 16px; font-weight: 700; }
+
+        .product-item {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 13px 14px;
+            margin-bottom: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0,0,0,.05);
+            gap: 8px;
+        }
+        .product-info h3 { font-size: 15px; font-weight: 700; }
+        .product-info p  { font-size: 12px; color: var(--txt2); margin-top: 2px; }
+        .product-price   { font-size: 16px; font-weight: 800; color: var(--blue); white-space: nowrap; }
+        .product-actions { display: flex; gap: 5px; flex-shrink: 0; }
+
+        .empty-state     { text-align: center; padding: 50px 20px; color: var(--txt2); }
+        .empty-icon      { font-size: 52px; margin-bottom: 12px; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.45);
+            display: flex; align-items: flex-end; justify-content: center;
+            z-index: 100;
+            opacity: 0; pointer-events: none;
+            transition: opacity .25s;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal {
+            background: #fff;
+            border-radius: 22px 22px 0 0;
+            padding: 22px 18px;
+            padding-bottom: max(22px, env(safe-area-inset-bottom));
+            width: 100%; max-width: 480px;
+            transform: translateY(100%);
+            transition: transform .3s ease;
+        }
+        .modal-overlay.open .modal { transform: translateY(0); }
+        .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .modal-title  { font-size: 18px; font-weight: 700; }
+        .modal-close  {
+            background: var(--bg); border: none;
+            width: 32px; height: 32px; border-radius: 50%;
+            cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--txt2);
+        }
+
+        /* ── SETTINGS ── */
+        .setting-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .setting-item:last-child { border-bottom: none; }
+        .setting-label h4 { font-size: 15px; font-weight: 600; }
+        .setting-label p  { font-size: 12px; color: var(--txt2); margin-top: 2px; }
+        .setting-row { display: flex; align-items: center; gap: 5px; }
+        .setting-input {
+            width: 85px;
+            padding: 8px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: right;
+            color: var(--blue);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .setting-input:focus { border-color: var(--blue); }
+        .setting-unit { font-size: 13px; color: var(--txt2); font-weight: 600; }
+
+        .info-box {
+            background: var(--blue-l);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #1E40AF;
+            line-height: 1.55;
+        }
+
+        /* ── COPY ROW ── */
+        .copy-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        .copy-row .btn { flex: 1; }
+
+        /* ── DIVIDER ── */
+        .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 82px;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #0F172A;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all .25s;
+            white-space: nowrap;
+            z-index: 200;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ── BADGE ── */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--blue-l);
+            color: var(--blue);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <span class="header-icon">💰</span>
+    <h1>Vinov Fiyat Hesaplama</h1>
+</div>
+
+<!-- TAB CONTENT -->
+<div class="tab-content">
+
+    <!-- ── HESAPLA ── -->
+    <div class="tab-pane active" id="tab-calc">
+
+        <div class="card" style="margin-top:4px">
+            <div class="card-title">Ürün ve Fiyat</div>
+
+            <div class="form-group">
+                <label class="form-label">Anlaşma Fiyatı (₺ +KDV)</label>
+                <input class="form-input" type="number" id="anlasma-fiyat"
+                       placeholder="0.00" step="0.01" inputmode="decimal">
+            </div>
+
+            <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">Müşterinin Talep Ettiği Vade (Gün)</label>
+                <input class="form-input" type="number" id="talep-gun"
+                       placeholder="örn. 300" value="300" inputmode="numeric">
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="hesapla()">🧮 Hesapla</button>
+
+        <!-- Sonuçlar -->
+        <div id="results-section" style="display:none">
+            <div class="divider"></div>
+
+            <div class="section-header">
+                <span class="section-title">Sonuçlar</span>
+                <span id="result-badge" class="badge"></span>
+            </div>
+
+            <div id="results-container"></div>
+
+            <div class="copy-row">
+                <button class="btn btn-secondary" style="font-size:14px" onclick="kopyala()">📋 Metni Kopyala</button>
+                <button class="btn btn-secondary" style="font-size:14px" onclick="temizle()">✕ Temizle</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── ÜRÜNLER ── -->
+    <div class="tab-pane" id="tab-products">
+        <div class="section-header" style="margin-top:4px">
+            <span class="section-title">Ürün Listesi</span>
+            <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ Yeni Ürün</button>
+        </div>
+        <div id="product-list"></div>
+    </div>
+
+    <!-- ── AYARLAR ── -->
+    <div class="tab-pane" id="tab-settings">
+
+        <div class="info-box" style="margin-top:4px">
+            ℹ️ Bu değerler Excel dosyanızdaki formüllerden alınmıştır. Oranlar değişirse buradan güncelleyebilirsiniz.
+        </div>
+
+        <div class="card">
+            <div class="card-title">Hesaplama Parametreleri</div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <h4>Vinov Yıllık Faiz Oranı</h4>
+                    <p>Vadeye göre otomatik hesaplanır</p>
+                </div>
+                <div class="setting-row">
+                    <input class="setting-input" type="number" id="vinov-rate" step="0.1" onchange="saveSettings()">
+                    <span class="setting-unit">%</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <h4>3 Ay Öteleme Faizi</h4>
+                    <p>Sabit oran</p>
+                </div>
+                <div class="setting-row">
+                    <input class="setting-input" type="number" id="ucay-rate" step="0.1" onchange="saveSettings()">
+                    <span class="setting-unit">%</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">
+                    <h4>12 Taksit Çarpanı</h4>
+                    <p>Fiyat çarpım katsayısı</p>
+                </div>
+                <div class="setting-row">
+                    <input class="setting-input" type="number" id="taksit-mult" step="0.0001" onchange="saveSettings()">
+                    <span class="setting-unit">×</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Uygulama</div>
+            <p style="font-size:14px; color:var(--txt2); line-height:1.65">
+                Tüm ürün ve ayar verileri yalnızca cihazınızda saklanır.<br>
+                İnternet bağlantısı gerekmez.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+    <button class="nav-item active" id="nav-calc" onclick="switchTab('calc')">
+        <span class="nav-icon">🧮</span>
+        <span>Hesapla</span>
+    </button>
+    <button class="nav-item" id="nav-products" onclick="switchTab('products')">
+        <span class="nav-icon">📦</span>
+        <span>Ürünler</span>
+    </button>
+    <button class="nav-item" id="nav-settings" onclick="switchTab('settings')">
+        <span class="nav-icon">⚙️</span>
+        <span>Ayarlar</span>
+    </button>
+</nav>
+
+<!-- ADD/EDIT PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal" onclick="closeModalIfOverlay(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="modal-title" id="modal-title">Yeni Ürün</span>
+            <button class="modal-close" onclick="closeProductModal()">✕</button>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Ürün Grubu</label>
+            <input class="form-input" type="text" id="modal-group" placeholder="örn. İNSEKTİSİT">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Ürün Adı *</label>
+            <input class="form-input" type="text" id="modal-name" placeholder="örn. Naafi">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Anlaşma Fiyatı (₺) *</label>
+            <input class="form-input" type="number" id="modal-price" placeholder="0.00" step="0.01" inputmode="decimal">
+        </div>
+
+        <button class="btn btn-primary" onclick="saveProduct()" style="margin-bottom:10px">Kaydet</button>
+        <button class="btn btn-secondary" onclick="closeProductModal()">İptal</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+let state = {
+    products: [],
+    settings: { vinovRate: 39, ucayRate: 8.5, taksitMult: 1.3514 }
+};
+
+let editingId = null;
+
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+function init() {
+    const saved = localStorage.getItem('vinovApp_v1');
+    if (saved) {
+        try {
+            const d = JSON.parse(saved);
+            state.products = d.products || [];
+            state.settings = Object.assign(state.settings, d.settings || {});
+        } catch(e) {}
+    } else {
+        // Excel'den gelen varsayılan ürün
+        state.products = [
+            { id: 1, group: 'İNSEKTİSİT', name: 'Naafi', price: 300 }
+        ];
+        persist();
+    }
+    renderSettings();
+    renderProductSelect();
+    renderProductList();
+}
+
+function persist() {
+    localStorage.setItem('vinovApp_v1', JSON.stringify(state));
+}
+
+// ════════════════════════════════════════
+//  TABS
+// ════════════════════════════════════════
+function switchTab(tab) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('nav-' + tab).classList.add('active');
+    if (tab === 'products') renderProductList();
+}
+
+// ════════════════════════════════════════
+//  CALCULATOR
+// ════════════════════════════════════════
+function onProductSelect() {
+    const id = parseInt(document.getElementById('product-select').value);
+    if (!id) return;
+    const p = state.products.find(x => x.id === id);
+    if (p) document.getElementById('anlasma-fiyat').value = p.price;
+}
+
+function hesapla() {
+    const fiyat = parseFloat(document.getElementById('anlasma-fiyat').value);
+    const gun   = parseInt(document.getElementById('talep-gun').value);
+
+    if (!fiyat || fiyat <= 0) { showToast('Geçerli bir fiyat girin'); return; }
+    if (!gun   || gun   <= 0) { showToast('Geçerli bir vade günü girin'); return; }
+
+    const { vinovRate, ucayRate, taksitMult } = state.settings;
+
+    // Formüller (Excel ile birebir aynı)
+    const faizOran   = vinovRate / 365 * gun / 100;           // =E2/F2*G2/100
+    if (faizOran >= 1) { showToast('Vade çok uzun — faiz oranı %100\'ü aşıyor!'); return; }
+
+    const vinovFiyat = fiyat / (1 - faizOran);                // =D4/(1-H2)
+    const ucayFiyat  = fiyat / (1 - ucayRate / 100);          // =D4/(1-$D$2)
+    const taksFiyat  = fiyat * taksitMult;                     // =D4*1.3514
+
+    const faizPct    = (faizOran * 100).toFixed(2);
+
+    document.getElementById('result-badge').textContent = gun + ' gün';
+
+    document.getElementById('results-container').innerHTML = `
+        <div class="result-card vinov">
+            <div>
+                <div class="r-label">Vinov Fiyatı</div>
+            </div>
+            <div class="r-value">${tl(vinovFiyat)}</div>
+        </div>
+        <div class="result-card ucay">
+            <div>
+                <div class="r-label">3 Ay Ötelemeli</div>
+            </div>
+            <div class="r-value">${tl(ucayFiyat)}</div>
+        </div>
+        <div class="result-card taksit">
+            <div>
+                <div class="r-label">12 Taksit</div>
+            </div>
+            <div class="r-value">${tl(taksFiyat)}</div>
+        </div>
+    `;
+
+    window._lastCalc = { fiyat, gun, faizPct, vinovFiyat, ucayFiyat, taksFiyat };
+
+    document.getElementById('results-section').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 80);
+}
+
+function temizle() {
+    document.getElementById('results-section').style.display = 'none';
+    document.getElementById('anlasma-fiyat').value = '';
+    document.getElementById('talep-gun').value = '300';
+    window._lastCalc = null;
+}
+
+function kopyala() {
+    if (!window._lastCalc) return;
+    const c = window._lastCalc;
+    const metin =
+        `Anlaşma Fiyatı : ${tl(c.fiyat)}\n` +
+        `Vade            : ${c.gun} gün\n\n` +
+        `Vinov Fiyatı    : ${tl(c.vinovFiyat)}\n` +
+        `3 Ay Ötelemeli  : ${tl(c.ucayFiyat)}\n` +
+        `12 Taksit       : ${tl(c.taksFiyat)}`;
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(metin).then(() => showToast('✓ Kopyalandı!'));
+    } else {
+        const el = document.createElement('textarea');
+        el.value = metin;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('✓ Kopyalandı!');
+    }
+}
+
+// ════════════════════════════════════════
+//  PRODUCTS
+// ════════════════════════════════════════
+function renderProductList() {
+    const el = document.getElementById('product-list');
+    if (!state.products.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><p>Henüz ürün eklenmemiş</p></div>`;
+        return;
+    }
+    el.innerHTML = state.products.map(p => `
+        <div class="product-item">
+            <div class="product-info">
+                <h3>${esc(p.name)}</h3>
+                <p>${esc(p.group || '—')}</p>
+            </div>
+            <div class="product-price">${tl(p.price)}</div>
+            <div class="product-actions">
+                <button class="btn btn-secondary btn-sm" onclick="editProduct(${p.id})">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderProductSelect() {
+    const sel = document.getElementById('product-select');
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— Elle fiyat gir —</option>' +
+        state.products.map(p => `<option value="${p.id}">${esc(p.name)} — ${tl(p.price)}</option>`).join('');
+    sel.value = cur;
+}
+
+function showAddProduct() {
+    editingId = null;
+    document.getElementById('modal-title').textContent = 'Yeni Ürün';
+    document.getElementById('modal-group').value = '';
+    document.getElementById('modal-name').value  = '';
+    document.getElementById('modal-price').value = '';
+    document.getElementById('product-modal').classList.add('open');
+    setTimeout(() => document.getElementById('modal-name').focus(), 350);
+}
+
+function editProduct(id) {
+    const p = state.products.find(x => x.id === id);
+    if (!p) return;
+    editingId = id;
+    document.getElementById('modal-title').textContent = 'Ürünü Düzenle';
+    document.getElementById('modal-group').value = p.group || '';
+    document.getElementById('modal-name').value  = p.name;
+    document.getElementById('modal-price').value = p.price;
+    document.getElementById('product-modal').classList.add('open');
+}
+
+function saveProduct() {
+    const group = document.getElementById('modal-group').value.trim();
+    const name  = document.getElementById('modal-name').value.trim();
+    const price = parseFloat(document.getElementById('modal-price').value);
+
+    if (!name)           { showToast('Ürün adı gerekli'); return; }
+    if (!price || price <= 0) { showToast('Geçerli bir fiyat girin'); return; }
+
+    if (editingId) {
+        const i = state.products.findIndex(x => x.id === editingId);
+        state.products[i] = { ...state.products[i], group, name, price };
+        showToast('Ürün güncellendi');
+    } else {
+        state.products.push({ id: Date.now(), group, name, price });
+        showToast('Ürün eklendi');
+    }
+
+    persist();
+    renderProductList();
+    renderProductSelect();
+    closeProductModal();
+}
+
+function deleteProduct(id) {
+    if (!confirm('Bu ürünü silmek istediğinizden emin misiniz?')) return;
+    state.products = state.products.filter(x => x.id !== id);
+    persist();
+    renderProductList();
+    renderProductSelect();
+    showToast('Ürün silindi');
+}
+
+function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('open');
+}
+function closeModalIfOverlay(e) {
+    if (e.target.id === 'product-modal') closeProductModal();
+}
+
+// ════════════════════════════════════════
+//  SETTINGS
+// ════════════════════════════════════════
+function renderSettings() {
+    document.getElementById('vinov-rate').value   = state.settings.vinovRate;
+    document.getElementById('ucay-rate').value    = state.settings.ucayRate;
+    document.getElementById('taksit-mult').value  = state.settings.taksitMult;
+}
+
+function saveSettings() {
+    state.settings.vinovRate  = parseFloat(document.getElementById('vinov-rate').value)  || 39;
+    state.settings.ucayRate   = parseFloat(document.getElementById('ucay-rate').value)   || 8.5;
+    state.settings.taksitMult = parseFloat(document.getElementById('taksit-mult').value) || 1.3514;
+    persist();
+    showToast('Ayarlar kaydedildi');
+}
+
+// ════════════════════════════════════════
+//  UTILITIES
+// ════════════════════════════════════════
+function tl(v) {
+    return '₺\u202F' + v.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ════════════════════════════════════════
+//  SERVICE WORKER
+// ════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+init();
+</script>
+</body>
+</html>
